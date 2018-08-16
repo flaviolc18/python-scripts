@@ -10,8 +10,22 @@ def download_video(url, filename):
   if not ".mp4" in filename:
     filename += ".mp4"
 
+  #try for 4 times of 5 timeout (the server is very bad :/)
+  #this way we get a greater percentage of success downloads
+  for k in range(4):
+    try:
+      r = requests.get(url, stream=True, timeout=5)
+    except requests.exceptions.Timeout:
+      continue
+    except requests.exceptions.ConnectionError:
+      continue
+    else:
+      break
+  else:
+    #didn't work with any request, then failed
+    return False
+
   try:
-    r = requests.get(url, stream=True, timeout=5)
     i = 0
     with open(filename, "wb") as f:
       for buff in r.iter_content(chunk_size=1024):
@@ -21,8 +35,6 @@ def download_video(url, filename):
           if(i%1500 == 0):
             print(".", end="", flush=True)
           i +=1
-  except requests.exceptions.Timeout:
-    return False
   except requests.exceptions.ConnectionError:
     return False
 
@@ -31,6 +43,7 @@ def download_video(url, filename):
 def find_all_videos(url):
   url_base = "http://eaulas.usp.br"
   link_videos = []
+  ids = []
 
   a = parse.urlsplit(url)
   link_videos.append(url_base + a.path+"?"+a.query)
@@ -41,7 +54,8 @@ def find_all_videos(url):
   for div in divs:
     links = div.find_all('a')
     for link in links:
-      link_videos.append(url_base + link.get('href'))
+      if "/portal/video.action" in link.get('href') and not "idVideoVersion=" in link.get('href'):
+        link_videos.append(url_base + link.get('href'))
   return link_videos
 
 def find_mp4_source(url):
@@ -66,7 +80,10 @@ def handler(array_links):
 
   for i in range(len(array_links)):
     params = dict(parse.parse_qsl(parse.urlsplit(array_links[i]).query))
-    filename = "aula-{}".format(params['idItem'])
+    try:
+      filename = "aula-{}".format(params['idItem'])
+    except KeyError:
+      continue
     url = find_mp4_source( array_links[i] )
     if not url:
       print("This is not a valid video")
@@ -109,7 +126,6 @@ def main():
     array_links = find_all_videos("http://eaulas.usp.br/portal/video.action?idItem=7628")
     print("Found {} videos!".format(len(array_links)))
     handler(array_links)
-    
 
 if __name__ == '__main__':
   main()
