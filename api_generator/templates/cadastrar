@@ -1,14 +1,15 @@
 'use strict';
 
-const ${api_singular_camelcase}Schema = require('./${api_singular_kebabcase}.schema');
+const ${return_name}Schema = require('./${route_name}.schema');
 
 module.exports = async function(fastify) {
-  const schemaHelper = fastify.schemaHelper(${api_singular_camelcase}Schema);
+  const schemaHelper = fastify.schemaHelper(${return_name}Schema);
 
-  fastify.post('/${api_plural_kebabcase}', schemaHelper.create('Cadastra um(a) novo(a) ${api_name}'), async function({body: new${api_singular_camelcase_true}}){
-    const db${api_plural_camelcase_true} = this.dbCollection('${api_plural_camelcase}');
-    const ${api_singular_camelcase} = await db${api_plural_camelcase_true}.create(new${api_singular_camelcase_true});
+  fastify.post('/${url_name}', schemaHelper.create('Cadastra ${one} ${new} ${description_singular}'),
+  async function({body: ${new}${singular_uppercase}}){
+    const ${db_name} = this.dbCollection('${collection_name}');
+    const ${return_name} = await ${db_name}.create(${new}${singular_uppercase});
 
-    return ${api_singular_camelcase};
-  })
-}
+    return ${return_name};
+  });
+};

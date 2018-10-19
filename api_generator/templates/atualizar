@@ -1,22 +1,22 @@
 'use strict';
 
-const ${api_singular_camelcase}Schema = require('./${api_singular_kebabcase}.schema');
+const ${return_name}Schema = require('./${route_name}.schema');
 
 module.exports = async function(fastify) {
-  const schemaHelper = fastify.schemaHelper(${api_singular_camelcase}Schema);
+  const schemaHelper = fastify.schemaHelper(${return_name}Schema);
 
   fastify.post(
-    '/${api_plural_kebabcase}/:${api_singular_camelcase}Id',
-    schemaHelper.update('Atualiza informações de um(a) ${api_name} cadastrado(a)'),
-    async function({ params: { ${api_singular_camelcase}Id }, body: atualizacoes }) {
-      const db${api_plural_camelcase_true} = this.dbCollection('${api_plural_camelcase}');
-      const ${api_singular_camelcase} = await db${api_plural_camelcase_true}.update(${api_singular_camelcase}Id, atualizacoes);
+    '/${url_name}/:${return_name}Id',
+    schemaHelper.update('Atualiza informações de ${one} ${description_singular} cadastrad${the}'),
+    async function({ params: { ${return_name}Id }, body: atualizacoes }) {
+      const ${db_name} = this.dbCollection('${collection_name}');
+      const ${return_name} = await ${db_name}.update(${return_name}Id, atualizacoes);
 
-      if (!${api_singular_camelcase}) {
+      if (!${return_name}) {
         throw fastify.httpErrors.notFound();
       }
 
-      return ${api_singular_camelcase};
+      return ${return_name};
     }
   );
 };

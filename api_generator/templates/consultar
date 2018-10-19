@@ -1,0 +1,14 @@
+'use strict';
+
+const ${return_name}Schema = require('./${route_name}.schema');
+
+module.exports = async function(fastify) {
+  const schemaHelper = fastify.schemaHelper(${return_name}Schema);
+
+  fastify.get('/${url_name}', schemaHelper.query('Consulta ${the}s ${description_plural} cadastrad${the}s'), async () => {
+    const ${db_name} = this.dbCollection('${collection_name}');
+    const ${return_name} = await ${db_name}.query();
+
+    return ${return_name};
+  });
+};

@@ -1,18 +1,19 @@
 'use strict';
 
-const ${api_singular_camelcase}Schema = require('./${api_singular_kebabcase}.schema');
+const ${return_name}Schema = require('./${route_name}.schema');
 
 module.exports = async function(fastify) {
-  const schemaHelper = fastify.schemaHelper(${api_singular_camelcase}Schema);
+  const schemaHelper = fastify.schemaHelper(${return_name}Schema);
 
-  fastify.delete('/${api_plural_kebabcase}/:${api_singular_camelcase}Id', schemaHelper.remove('Remove um(a) ${api_name} cadastrado(a)'), async function({params: ${api_singular_camelcase}Id}){
-    const db${api_plural_camelcase_true} = this.dbCollection('${api_plural_camelcase}');
-    const ${api_singular_camelcase} = await db${api_plural_camelcase_true}.remove(${api_singular_camelcase}Id);
+  fastify.delete('/${url_name}/:${return_name}Id', schemaHelper.remove('Remove ${one} ${description_singular} cadastrad${the}'),
+  async function({params: ${return_name}Id}){
+    const ${db_name} = this.dbCollection('${collection_name}');
+    const ${return_name} = await ${db_name}.remove(${return_name}Id);
 
-    if(!${api_singular_camelcase}){
+    if(!${return_name}){
       throw fastify.httpErrors.notFound();
     }
 
-    return ${api_singular_camelcase};
-  })
-}
+    return ${return_name};
+  });
+};
