@@ -44,3 +44,12 @@ def escreve_codigo_remover(api_dict, path_to_save):
     array_of_lines.append(t.substitute(api_dict))
   f = open("{}/remover-{}.js".format(path_to_save, api_dict['api_singular_kebabcase']), 'w')
   f.write("".join(array_of_lines))
+
+def escreve_codigo_index(api_dict, path_to_save):
+  array_of_lines = []
+  template = open('./templates/index', 'r')
+  for line in template:
+    t = Template(line)
+    array_of_lines.append(t.substitute(api_dict))
+  f = open("{}/index.js".format(path_to_save), 'w')
+  f.write("".join(array_of_lines))

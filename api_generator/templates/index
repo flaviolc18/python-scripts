@@ -1,0 +1,9 @@
+'use strict';
+
+module.exports = async function(fastify) {
+  fastify.register(require('./consultar-${api_plural_kebabcase}'));
+  fastify.register(require('./cadastrar-${api_singular_kebabcase}'));
+  fastify.register(require('./recuperar-${api_singular_kebabcase}'));
+  fastify.register(require('./atualizar-${api_singular_kebabcase}'));
+  fastify.register(require('./remover-${api_singular_kebabcase}'));
+};

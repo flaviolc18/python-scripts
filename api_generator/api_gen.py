@@ -28,9 +28,9 @@ if not os.path.exists(abs_api_path):
 
 print("Creating api's files...")
 
-CRUD = ['atualizar', 'cadastrar', 'consultar', 'recuperar', 'remover']
+funcs = ['atualizar', 'cadastrar', 'consultar', 'recuperar', 'remover', 'index']
 
-for i in CRUD:
+for i in funcs:
   eval("gen.escreve_codigo_{}(api_dict, abs_api_path)".format(i))
 
 print("Files created at {}".format(abs_api_path))
