@@ -1,0 +1,14 @@
+'use strict';
+
+const ${api_singular_camelcase}Schema = require('./${api_singular_kebabcase}.schema');
+
+module.exports = async function(fastify) {
+  const schemaHelper = fastify.schemaHelper(${api_singular_camelcase}Schema);
+
+  fastify.post('/${api_plural_kebabcase}', schemaHelper.create('Cadastra um(a) novo(a) ${api_name}'), async function({body: new${api_singular_camelcase_true}}){
+    const db${api_plural_camelcase_true} = this.dbCollection('${api_plural_camelcase}');
+    const ${api_singular_camelcase} = await db${api_plural_camelcase_true}.create(new${api_singular_camelcase_true});
+
+    return ${api_singular_camelcase};
+  })
+}

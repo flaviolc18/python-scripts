@@ -1,0 +1,18 @@
+'use strict';
+
+const ${api_singular_camelcase}Schema = require('./${api_singular_kebabcase}.schema');
+
+module.exports = async function(fastify) {
+  const schemaHelper = fastify.schemaHelper(${api_singular_camelcase}Schema);
+
+  fastify.delete('/${api_plural_kebabcase}/:${api_singular_camelcase}Id', schemaHelper.remove('Remove um(a) ${api_name} cadastrado(a)'), async function({params: ${api_singular_camelcase}Id}){
+    const db${api_plural_camelcase_true} = this.dbCollection('${api_plural_camelcase}');
+    const ${api_singular_camelcase} = await db${api_plural_camelcase_true}.remove(${api_singular_camelcase}Id);
+
+    if(!${api_singular_camelcase}){
+      throw fastify.httpErrors.notFound();
+    }
+
+    return ${api_singular_camelcase};
+  })
+}
