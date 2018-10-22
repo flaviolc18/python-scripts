@@ -1,55 +1,28 @@
 from string import Template
 
-def escreve_codigo_atualizar(api_dict, path_to_save):
+def write_template(crud_name, api_dict, path_to_save):
   array_of_lines = []
-  template = open('./templates/atualizar', 'r')
+  template = open('./templates/'+crud_name, 'r')
   for line in template:
     t = Template(line)
     array_of_lines.append(t.substitute(api_dict))
-  f = open("{}/atualizar-{}.js".format(path_to_save, api_dict['route_name']), 'w')
+  f = open("{}/{}-{}.js".format(path_to_save, crud_name, api_dict['route_name']), 'w')
   f.write("".join(array_of_lines))
 
-def escreve_codigo_cadastrar(api_dict, path_to_save):
-  array_of_lines = []
-  template = open('./templates/cadastrar', 'r')
-  for line in template:
-    t = Template(line)
-    array_of_lines.append(t.substitute(api_dict))
-  f = open("{}/cadastrar-{}.js".format(path_to_save, api_dict['route_name']), 'w')
-  f.write("".join(array_of_lines))
+def write_template(api_dict, path_to_save):
+  crud_operation('atualizar', api_dict, path_to_save)
 
-def escreve_codigo_consultar(api_dict, path_to_save):
-  array_of_lines = []
-  template = open('./templates/consultar', 'r')
-  for line in template:
-    t = Template(line)
-    array_of_lines.append(t.substitute(api_dict))
-  f = open("{}/consultar-{}.js".format(path_to_save, api_dict['route_name']), 'w')
-  f.write("".join(array_of_lines))
+def write_template(api_dict, path_to_save):
+  crud_operation('cadastrar', api_dict, path_to_save)
 
-def escreve_codigo_recuperar(api_dict, path_to_save):
-  array_of_lines = []
-  template = open('./templates/recuperar', 'r')
-  for line in template:
-    t = Template(line)
-    array_of_lines.append(t.substitute(api_dict))
-  f = open("{}/recuperar-{}.js".format(path_to_save, api_dict['route_name']), 'w')
-  f.write("".join(array_of_lines))
+def write_template(api_dict, path_to_save):
+  crud_operation('consultar', api_dict, path_to_save)
 
-def escreve_codigo_remover(api_dict, path_to_save):
-  array_of_lines = []
-  template = open('./templates/remover', 'r')
-  for line in template:
-    t = Template(line)
-    array_of_lines.append(t.substitute(api_dict))
-  f = open("{}/remover-{}.js".format(path_to_save, api_dict['route_name']), 'w')
-  f.write("".join(array_of_lines))
+def write_template(api_dict, path_to_save):
+  crud_operation('recuperar', api_dict, path_to_save)
 
-def escreve_codigo_index(api_dict, path_to_save):
-  array_of_lines = []
-  template = open('./templates/index', 'r')
-  for line in template:
-    t = Template(line)
-    array_of_lines.append(t.substitute(api_dict))
-  f = open("{}/index.js".format(path_to_save), 'w')
-  f.write("".join(array_of_lines))
+def write_template(api_dict, path_to_save):
+  crud_operation('remover', api_dict, path_to_save)
+
+def write_template(api_dict, path_to_save):
+  crud_operation('index', api_dict, path_to_save)
